@@ -5,10 +5,11 @@ const bodyParser = require('body-parser');
 
 // Inicializando o app Express
 const app = express();
-const port = 5000;
+//const port = 5000;
+const port = process.env.PORT || 8080;
 
 // Conexão com o MongoDB (com autenticação)
-mongoose.connect('mongodb://root:rootpassword@mongo-todo:27017/todo-app?authSource=admin', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -16,7 +17,9 @@ mongoose.connect('mongodb://root:rootpassword@mongo-todo:27017/todo-app?authSour
   .catch((err) => console.error('Erro ao conectar ao MongoDB:', err));
 
 // Middleware para habilitar CORS e processar JSON
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || 'http://localhost:3000'
+}));
 app.use(bodyParser.json());
 
 // Definindo o modelo de Tarefa (To-do)
