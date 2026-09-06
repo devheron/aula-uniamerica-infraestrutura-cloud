@@ -14,8 +14,9 @@ RUN npm install
 COPY . .
 
 # Expondo a porta que o frontend vai usar (3000) no environment
-ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=$REACT_APP_API_URL
+#ARG REACT_APP_API_URL
+#ENV REACT_APP_API_URL=$REACT_APP_API_URL
+ENV REACT_APP_API_URL=https://api.todo.projetomensal.com.br
 
 # Construindo a aplicação para produção
 RUN npm run build
