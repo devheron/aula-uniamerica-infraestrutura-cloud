@@ -39,13 +39,13 @@ app.use((req, res, next) => {
 const port = process.env.PORT || 8080;
 
 // Conexão com o MongoDB (com autenticação)
-mongoose.connect(process.env.MONGO_URI, {
+/*mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
   .then(() => console.log('Conectado ao MongoDB'))
   .catch((err) => console.error('Erro ao conectar ao MongoDB:', err));
-
+*/
 // Middleware para habilitar CORS e processar JSON
 app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:3000'
@@ -220,3 +220,12 @@ app.delete('/todos/:id', async (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
+
+// Conexão com o MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000
+})
+  .then(() => console.log('Conectado ao MongoDB'))
+  .catch((err) => console.error('Erro ao conectar ao MongoDB:', err.message));
